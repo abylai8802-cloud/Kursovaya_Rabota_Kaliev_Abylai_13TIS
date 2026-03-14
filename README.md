@@ -1,0 +1,1 @@
+# Kursovaya_Rabota_Kaliev_Abylai_13TIS
