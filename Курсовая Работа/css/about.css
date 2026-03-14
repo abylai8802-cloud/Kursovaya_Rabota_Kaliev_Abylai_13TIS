@@ -1,0 +1,48 @@
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    background: black;
+    padding: 30px;
+    border-radius: 16px;
+    line-height: 1.7;
+}
+
+.about-content h2,
+.about-content h3 {
+    color: red;
+    margin: 25px 0 15px;
+}
+
+.about-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.about-content ul li {
+    margin: 12px 0;
+    font-size: 1.1rem;
+}
+
+.about-content a {
+    color: red;
+    text-decoration: none;
+}
+
+.about-content a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .about-content {
+        padding: 20px 16px;
+    }
+
+    .about-content h2,
+    .about-content h3 {
+        font-size: 1.6rem;
+    }
+
+    .about-content ul li {
+        font-size: 1rem;
+    }
+}

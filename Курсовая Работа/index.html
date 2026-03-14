@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КиноКоллекция</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">КиноКоллекция</div>
+            <nav>
+                <a href="index.html" class="nav-link active">Коллекция</a>
+                <a href="form.html" class="nav-link">Добавить фильм</a>
+                <a href="about.html" class="nav-link">О проекте</a>
+                <a href="stats.html" class="nav-link">Статистика</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="title">Моя коллекция фильмов</h1>
+        <p class="stats">Всего фильмов: <span id="total-count">0</span></p>
+
+        <div id="movies-grid" class="movies-grid"></div>
+
+        <button onclick="window.location.href='form.html'" class="add-btn">+ Добавить новый фильм</button>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
