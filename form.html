@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить фильм — КиноКоллекция</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/form.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">КиноКоллекция</div>
+            <nav>
+                <a href="index.html" class="nav-link">Коллекция</a>
+                <a href="form.html" class="nav-link active">Добавить фильм</a>
+                <a href="about.html" class="nav-link">О проекте</a>
+                <a href="stats.html" class="nav-link">Статистика</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="title fade-in">Добавить новый фильм</h1>
+        <hr class="section-divider">
+
+        <form id="movie-form" class="movie-form fade-in">
+            <div class="form-group">
+                <label for="title">Название фильма *</label>
+                <input type="text" id="title" placeholder="Например: Интерстеллар" required>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Год выпуска *</label>
+                <input type="number" id="year" min="1888" max="2100" placeholder="2026" required>
+            </div>
+
+            <div class="form-group">
+                <label for="genre">Жанр *</label>
+                <select id="genre" required>
+                    <option value="" disabled selected>Выберите жанр</option>
+                    <option value="Драма">Драма</option>
+                    <option value="Мелодрама">Мелодрама</option>
+                    <option value="Исторический фильм">Исторический фильм</option>
+                    <option value="Биологический фильм">Биологический фильм</option>
+                    <option value="Боевик">Боевик</option>
+                    <option value="Приключения">Приключения</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Фэнтэзи">Фэнтэзи</option>
+                    <option value="Триллер">Триллер</option>
+                    <option value="Комедия">Комедия</option>
+                    <option value="Романтическая комедия">Романтическая комедия</option>
+                    <option value="Чёрная комедия">Чёрная комедия</option>
+                    <option value="Хоррор">Хоррор</option>
+                    <option value="Мистика">Мистика</option>
+                    <option value="Вестерн">Вестерн</option>
+                    <option value="Мюзикл">Мизюкл</option>
+                    <option value="Документальное кино">Документальное кино</option>
+                    <option value="Другое">Другое</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="director">Режиссёр *</label>
+                <input type="text" id="director" placeholder="Кристофер Нолан, Дени Вильнёв..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="actors">Актёры (через запятую)</label>
+                <textarea id="actors" rows="3" placeholder="Мэттью МакКонахи, Энн Хэтэуэй, Тимоти Шаламе..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Заметки / краткий отзыв (необязательно)</label>
+                <textarea id="notes" rows="4" placeholder="Что понравилось, любимая сцена..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="poster">Постер / обложка фильма (jpg, png, до 2 МБ)</label>
+                <input type="file" id="poster" accept="image/jpeg,image/png" />
+                <div id="poster-preview" style="margin-top:12px; text-align:center;">
+                    <img id="preview-img" style="max-width:240px; max-height:360px; border-radius:8px; display:none;"
+                        alt="Предпросмотр постера">
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="save-btn">Сохранить фильм</button>
+                <a href="index.html" class="cancel-btn">Отмена</a>
+            </div>
+        </form>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script>
+        const form = document.getElementById('movie-form');
+        const posterInput = document.getElementById('poster');
+        const previewImg = document.getElementById('preview-img');
+
+        posterInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) {
+                previewImg.style.display = 'none';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Файл слишком большой! Максимум 2 МБ.');
+                this.value = '';
+                previewImg.style.display = 'none';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value.trim();
+            const year = document.getElementById('year').value.trim();
+            const genre = document.getElementById('genre').value;
+            const director = document.getElementById('director').value.trim();
+            const actors = document.getElementById('actors').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+
+            if (!title || !year || !genre || !director) {
+                alert('Заполни все обязательные поля со звёздочкой (*)');
+                return;
+            }
+
+            const file = posterInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    saveMovie(ev.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveMovie(null);
+            }
+
+            function saveMovie(posterData) {
+                const newMovie = {
+                    id: Date.now(),
+                    title,
+                    year: Number(year),
+                    genre,
+                    director,
+                    actors,
+                    notes,
+                    watched: false,
+                    poster: posterData
+                };
+
+                let movies = getMovies();
+                movies.push(newMovie);
+                saveMovies(movies);
+
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

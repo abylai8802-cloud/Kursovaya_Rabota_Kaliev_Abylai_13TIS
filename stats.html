@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика — КиноКоллекция</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/stats.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">КиноКоллекция</div>
+            <nav>
+                <a href="index.html" class="nav-link">Коллекция</a>
+                <a href="form.html" class="nav-link">Добавить фильм</a>
+                <a href="about.html" class="nav-link">О проекте</a>
+                <a href="stats.html" class="nav-link active">Статистика</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="title fade-in">Статистика коллекции</h1>
+        <hr class="section-divider">
+
+        <div class="stats-grid fade-in" id="stats-grid"></div>
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script>
+        function showStats() {
+            const movies = getMovies();
+            if (movies.length === 0) {
+                document.getElementById('stats-grid').innerHTML = '<p style="text-align:center; font-size:1.4rem;">Пока нет фильмов. Добавь первый!</p>';
+                return;
+            }
+
+            const watched = movies.filter(m => m.watched).length;
+            const total = movies.length;
+            const unwatched = total - watched;
+
+            let genresCount = {};
+            movies.forEach(m => {
+                genresCount[m.genre] = (genresCount[m.genre] || 0) + 1;
+            });
+
+            let topGenre = '—';
+            let maxCount = 0;
+            for (let g in genresCount) {
+                if (genresCount[g] > maxCount) {
+                    maxCount = genresCount[g];
+                    topGenre = g;
+                }
+            }
+
+            const html = `
+                <div class="stat-card">
+                    <div class="stat-value">${total}</div>
+                    <div class="stat-label">Всего фильмов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${watched}</div>
+                    <div class="stat-label">Просмотрено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${unwatched}</div>
+                    <div class="stat-label">Не просмотрено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${topGenre}</div>
+                    <div class="stat-label">Популярный жанр (${maxCount} шт)</div>
+                </div>
+            `;
+
+            document.getElementById('stats-grid').innerHTML = html;
+        }
+
+        window.addEventListener('load', showStats);
+    </script>
+</body>
+</html>
