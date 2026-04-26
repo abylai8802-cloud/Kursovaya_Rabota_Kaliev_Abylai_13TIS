@@ -1,0 +1,135 @@
+:root {
+    --accent-color: #e50914;
+    --accent-hover: #b0000f;
+    --text-primary: #1a1a1a;
+    --text-muted: #444444;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --border-color: #dddddd;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --accent-color: #e50914;
+    --accent-hover: #b0000f;
+    --text-primary: #ffffff;
+    --text-muted: #aaaaaa;
+    --bg-color: #0a0a0a;
+    --card-bg: #0f0f0f;
+    --border-color: #330000;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+
+body {
+    background: var(--bg-color);
+    color: var(--text-primary);
+    transition: all 0.4s ease;
+}
+
+header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo,
+.title,
+.stat-value {
+    color: var(--accent-color) !important;
+}
+
+.movie-card,
+.stat-card,
+.movie-form,
+.about-content {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.stat-label,
+p,
+label,
+.movie-card p {
+    color: var(--text-muted);
+}
+
+.nav-link {
+    color: var(--text-muted);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.add-btn,
+.save-btn,
+.delete-btn {
+    background: var(--accent-color);
+    color: white;
+}
+
+.add-btn:hover,
+.save-btn:hover,
+.delete-btn:hover {
+    background: var(--accent-hover);
+}
+
+[data-theme="light"] .movie-poster {
+    border-bottom: 3px solid #f0f0f0;
+}
+
+[data-theme="light"] .no-poster {
+    background: #f5f5f5;
+    color: #777777;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.55rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: none;
+    color: var(--accent-color);
+    transform: rotate(20deg);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background: none;
+    color: #e50914;
+}
+
+[data-theme="light"] .movie-form input,
+[data-theme="light"] .movie-form select,
+[data-theme="light"] .movie-form textarea {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border: 2px solid #cccccc !important;
+    border-radius: 8px;
+}
+
+[data-theme="light"] .movie-form input:focus,
+[data-theme="light"] .movie-form select:focus,
+[data-theme="light"] .movie-form textarea:focus {
+    border-color: #e50914 !important;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2) !important;
+    outline: none;
+}
+
+[data-theme="light"] .movie-form input::placeholder,
+[data-theme="light"] .movie-form textarea::placeholder {
+    color: #888888 !important;
+}
+
+[data-theme="light"] .form-group label {
+    color: #1a1a1a !important;
+}
